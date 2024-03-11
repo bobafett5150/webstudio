@@ -1,0 +1,33 @@
+# docker-compose.yaml
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      DATABASE_URL: postgresql://user:pass@db:5432/webstudio
+      DIRECT_URL:   postgresql://user:pass@db:5432/webstudio
+
+  db:
+    image: postgres
+    # Uncomment to log all queries
+    command: ["postgres", "-c", "log_statement=all"]
+    restart: always
+    environment:
+      # postgresql://user:pass@localhost:5432/webstudio
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: webstudio
+      POSTGRES_USER: user
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - ${PGPORT:-5432}:5432
+volumes:
+  db:
