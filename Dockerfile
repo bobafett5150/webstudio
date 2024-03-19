@@ -19,10 +19,20 @@ RUN npm install -g pnpm@8.8 && \
 COPY . .
 
 # 依存関係のインストール
-#RUN pnpm install
+RUN pnpm install
+RUN pnpm build
+RUN pnpm migrations migrate
 
+# アプリケーションの起動
+CMD ["pnpm", "dev"]
+#CMD ["tail", "-f", "/dev/null"]
+
+#    pnpm build && \
+#    pnpm migrations migrate
 # アプリケーションのソースをコピー
 #COPY . .
+
+#RUN sleep 10
 
 # ビルドコマンドの実行
 #RUN pnpm build
@@ -30,11 +40,11 @@ COPY . .
 # データベースマイグレーション
 #RUN pnpm migrations migrate
 
-# アプリケーションの起動
+## アプリケーションの起動
 #CMD ["pnpm", "dev"]
 
 # アプリケーションの起動ではなく、コンテナを稼働させ続ける
-CMD ["tail", "-f", "/dev/null"]
+#CMD ["tail", "-f", "/dev/null"]
 
 # apps/.env.example をコピーして apps/.envを作成
 # AUTH_SECRET="" にパスワード4桁以上を書く

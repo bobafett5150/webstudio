@@ -10,8 +10,8 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      DATABASE_URL: postgresql://user:pass@db:5432/webstudio
-      DIRECT_URL:   postgresql://user:pass@db:5432/webstudio
+      DATABASE_URL: postgresql://user:pass@host.docker.internal:5432/webstudio
+      DIRECT_URL:   postgresql://user:pass@host.docker.internal:5432/webstudio
     networks:
       - shared-network
 
