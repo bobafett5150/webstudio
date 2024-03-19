@@ -5,6 +5,8 @@ FROM node:18
 # 作業ディレクトリを設定
 WORKDIR /usr/src/app
 
+ENV NODE_ENV=development
+
 # pnpmをインストール
 RUN npm install -g pnpm@8.8 && \
     apt-get update && \
@@ -34,6 +36,8 @@ COPY . .
 # アプリケーションの起動ではなく、コンテナを稼働させ続ける
 CMD ["tail", "-f", "/dev/null"]
 
+# apps/.env.example をコピーして apps/.envを作成
+# AUTH_SECRET="" にパスワード4桁以上を書く
 
 # 起動後
 # pnpm install
